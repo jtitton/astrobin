@@ -32,7 +32,11 @@ before_script:
   - if [ ${DOCKER_MODE} = "stack" ]; then docker exec -it $(docker ps -q -f name=astrobin_astrobin --last 1) python manage.py collectstatic --noinput 2>&1 >/dev/null; fi
 
 script:
+  - if [ ${DOCKER_MODE} = "compose" ]; then docker-compose -f docker/docker-compose.yml -f docker/docker-compose.build.yml -f docker/docker-compose.travis.yml run --no-deps --rm astrobin bash -c "(cd frontend; npm test)"; fi
+  - if [ ${DOCKER_MODE} = "compose" ]; then docker-compose -f docker/docker-compose.yml -f docker/docker-compose.build.yml -f docker/docker-compose.travis.yml run --no-deps --rm astrobin bash -c "(cd frontend; npm run e2e)"; fi
   - if [ ${DOCKER_MODE} = "compose" ]; then docker-compose -f docker/docker-compose.yml -f docker/docker-compose.build.yml -f docker/docker-compose.travis.yml run --no-deps --rm astrobin bash -c "./manage.py collectstatic --noinput && ./scripts/test.sh"; fi
+  - if [ ${DOCKER_MODE} = "stack" ]; then docker exec -it $(docker ps -q -f name=astrobin_astrobin --last 1) bash -c "(cd frontend; npm test)"; fi
+  - if [ ${DOCKER_MODE} = "stack" ]; then docker exec -it $(docker ps -q -f name=astrobin_astrobin --last 1) bash -c "(cd frontend; npm run e2e)"; fi
   - if [ ${DOCKER_MODE} = "stack" ]; then docker exec -it $(docker ps -q -f name=astrobin_astrobin --last 1) ./scripts/test.sh; fi
 
 after_success:
