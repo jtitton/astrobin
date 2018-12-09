@@ -32,3 +32,4 @@ astrobin-mobile.css
 astrobin.css
 *.scssc
 *.css.map
+node_modules
