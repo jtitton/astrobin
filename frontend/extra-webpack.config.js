@@ -1,4 +1,4 @@
-const BundleTracker = require('webpack-bundle-tracker');
+var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
   plugins: [
@@ -6,6 +6,6 @@ module.exports = {
   ],
   output: {
     path: require('path').resolve('../astrobin/static/astrobin/bundles/frontend'),
-    filename: "[name]-[hash].js",
+    filename: "[name]-[hash].js"
   }
 };
