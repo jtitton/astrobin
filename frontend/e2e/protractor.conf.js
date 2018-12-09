@@ -1,7 +1,9 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
-const { SpecReporter } = require('jasmine-spec-reporter');
+var SpecReporter = require('jasmine-spec-reporter');
+
+process.env.CHROME_BIN = process.env.CHROME_BIN || require('puppeteer').executablePath();
 
 exports.config = {
   allScriptsTimeout: 11000,
@@ -19,7 +21,12 @@ exports.config = {
     defaultTimeoutInterval: 30000,
     print: function() {}
   },
-  onPrepare() {
+  chromeOptions: {
+    args: {
+      binary: process.env.CHROME_BIN
+    }
+  },
+  onPrepare: function() {
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
