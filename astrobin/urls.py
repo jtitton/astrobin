@@ -34,6 +34,7 @@ from astrobin.views import (
     registration as registration_views,
 
     index,
+    app,
 
     image_edit_acquisition,
     image_edit_acquisition_reset,
@@ -151,6 +152,12 @@ v1_api.register(ImageOfTheDayResource())
 v1_api.register(CollectionResource())
 
 urlpatterns = [
+    ###########################################################################
+    ### FRONTEND APP                                                        ###
+    ###########################################################################
+
+    url(r'^app/$', app, name='app'),
+
     ###########################################################################
     ### DJANGO VIEWS                                                        ###
     ###########################################################################

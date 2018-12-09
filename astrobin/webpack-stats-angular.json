@@ -1,0 +1,55 @@
+{
+  "status": "done",
+  "chunks": {
+    "main": [
+      {
+        "name": "main-0835190f94dd9c7ddcf9.js",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/main-0835190f94dd9c7ddcf9.js"
+      },
+      {
+        "name": "main-0835190f94dd9c7ddcf9.js.map",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/main-0835190f94dd9c7ddcf9.js.map"
+      }
+    ],
+    "polyfills": [
+      {
+        "name": "polyfills-0835190f94dd9c7ddcf9.js",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/polyfills-0835190f94dd9c7ddcf9.js"
+      },
+      {
+        "name": "polyfills-0835190f94dd9c7ddcf9.js.map",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/polyfills-0835190f94dd9c7ddcf9.js.map"
+      }
+    ],
+    "runtime": [
+      {
+        "name": "runtime-0835190f94dd9c7ddcf9.js",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/runtime-0835190f94dd9c7ddcf9.js"
+      },
+      {
+        "name": "runtime-0835190f94dd9c7ddcf9.js.map",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/runtime-0835190f94dd9c7ddcf9.js.map"
+      }
+    ],
+    "styles": [
+      {
+        "name": "styles-0835190f94dd9c7ddcf9.js",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/styles-0835190f94dd9c7ddcf9.js"
+      },
+      {
+        "name": "styles-0835190f94dd9c7ddcf9.js.map",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/styles-0835190f94dd9c7ddcf9.js.map"
+      }
+    ],
+    "vendor": [
+      {
+        "name": "vendor-0835190f94dd9c7ddcf9.js",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/vendor-0835190f94dd9c7ddcf9.js"
+      },
+      {
+        "name": "vendor-0835190f94dd9c7ddcf9.js.map",
+        "path": "/Users/siovene/Code/astrobin/astrobin/static/astrobin/bundles/frontend/vendor-0835190f94dd9c7ddcf9.js.map"
+      }
+    ]
+  }
+}

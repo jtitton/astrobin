@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load render_bundle from webpack_loader %}
+
+{% block title %}AstroBin{% endblock %}
+{% block base_href %}/app{% endblock %}
+
+{% block content %}
+    <app-root></app-root>
+
+    {% render_bundle 'main' 'js' 'FRONTEND' %}
+    {% render_bundle 'polyfills' 'js' 'FRONTEND' %}
+    {% render_bundle 'runtime' 'js' 'FRONTEND' %}
+    {% render_bundle 'styles' 'js' 'FRONTEND' %}
+    {% render_bundle 'vendor' 'js' 'FRONTEND' %}
+{% endblock %}
+
+
+
