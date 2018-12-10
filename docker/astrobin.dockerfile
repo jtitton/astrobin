@@ -73,7 +73,7 @@ RUN gem install compass
 RUN yarn global add @angular/cli
 COPY frontend /code/frontend
 WORKDIR /code/frontend
-RUN rm -rf node_modules && npm install && ng build --aot
+RUN npm install && ng build --aot && rm -rf node_modules
 WORKDIR /code
 
 # Install logrotate file
