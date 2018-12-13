@@ -3,8 +3,6 @@
 
 var SpecReporter = require('jasmine-spec-reporter');
 
-process.env.CHROME_BIN = process.env.CHROME_BIN || require('puppeteer').executablePath();
-
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
@@ -22,9 +20,7 @@ exports.config = {
     print: function() {}
   },
   chromeOptions: {
-    args: {
-      binary: process.env.CHROME_BIN
-    }
+    args: ["--headless"]
   },
   onPrepare: function() {
     require('ts-node').register({
