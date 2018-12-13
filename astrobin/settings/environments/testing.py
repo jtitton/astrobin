@@ -1,10 +1,11 @@
+import os
 import sys
 import logging
 
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+TESTING = os.environ.get("TESTING", len(sys.argv) > 1 and sys.argv[1] == 'test')
 
 if TESTING:
-    DEBUG = False
+    DEBUG = True
     AWS_S3_ENABLED = False
     LOCAL_STATIC_STORAGE = True
     PREMIUM_ENABLED = True
@@ -35,3 +36,8 @@ if TESTING:
     PREMIUM_MAX_IMAGES_FREE = 20
     PREMIUM_MAX_IMAGES_LITE = 20
 
+    CELERY_TASK_ALWAYS_EAGER = True
+    CELERY_RESULT_BACKEND = 'cache'
+    CELERY_CACHE_BACKEND = 'memory'
+
+    STATICFILES_STORAGE = 'pipeline.storage.NonPackagingPipelineStorage'

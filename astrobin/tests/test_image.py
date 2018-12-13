@@ -12,6 +12,8 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 # AstroBin
+from mock import patch
+
 from nested_comments.models import NestedComment
 
 # Third party
@@ -141,6 +143,7 @@ class ImageTest(TestCase):
     # View tests                                                              #
     ###########################################################################
 
+    @patch('astrobin.tasks.retrieve_primary_thumbnails.delay')
     def test_image_upload_process_view(self):
         self.client.login(username = 'test', password = 'password')
 

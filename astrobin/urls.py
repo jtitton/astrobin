@@ -460,11 +460,11 @@ urlpatterns = [
 
 urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
 
-if settings.DEBUG and not settings.AWS_S3_ENABLED:
+if (settings.DEBUG or settings.TESTING) and not settings.AWS_S3_ENABLED:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}))
 
-if settings.DEBUG and settings.LOCAL_STATIC_STORAGE:
+if (settings.DEBUG or settings.TESTING) and settings.LOCAL_STATIC_STORAGE:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += patterns('', (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}))
 
