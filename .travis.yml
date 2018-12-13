@@ -1,34 +1,66 @@
 sudo: required
 dist: trusty
 
-services:
-  - docker
-
 addons:
   chrome: stable
 
-install:
-  - sudo apt update -y
-  - sudo apt install --only-upgrade docker-ce -y
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - (cd frontend && npm install)
-  - docker build -t astrobin/astrobin:latest -f docker/astrobin.dockerfile .
+jobs:
+  include:
+    - stage: test
 
-before_script:
-  - docker-compose -f docker/docker-compose.travis.yml up --no-deps -d
-  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/init.sh
+      name: Dockerized Django backend
 
-script:
-  - (cd frontend; npm test)
-  - (cd frontend; npm run e2e)
-  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/test.sh
+      services:
+        - docker
 
-after_success:
-  - docker cp -a .git $(docker ps -q -f name=astrobin_astrobin --last 1):/code # Needed by codecov.
-  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/codecov.sh
-  - docker push astrobin/astrobin:latest
+      install:
+        - sudo apt update -y
+        - sudo apt install --only-upgrade docker-ce -y
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t astrobin/astrobin:latest -f docker/astrobin.dockerfile .
 
-after_script:
-  - docker-compose -f docker/docker-compose.travis.yml down
-  - docker logout
+      before_script:
+        - docker-compose -f docker/docker-compose.travis.yml up --no-deps -d
+        - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/init.sh
 
+      script:
+        - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/test.sh
+
+      after_success:
+        - docker cp -a .git $(docker ps -q -f name=astrobin_astrobin --last 1):/code # Needed by codecov.
+        - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/codecov.sh
+        - docker push astrobin/astrobin:latest
+
+      after_script:
+        - docker-compose -f docker/docker-compose.travis.yml down
+        - docker logout
+
+    - stage: test
+
+      name: Frontend unit tests
+
+      language: node_js
+
+      node_js: 10
+
+      install:
+        - (cd frontend && npm install)
+
+      script:
+        - (cd frontend; npm test)
+        - (cd frontend; npm run e2e)
+
+
+    - stage: test
+
+      name: Frontend e2e tests
+
+      language: node_js
+
+      node_js: 10
+
+      install:
+        - (cd frontend && npm install)
+
+      script:
+        - (cd frontend; npm run e2e)
