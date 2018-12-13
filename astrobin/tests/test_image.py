@@ -144,7 +144,7 @@ class ImageTest(TestCase):
     ###########################################################################
 
     @patch('astrobin.tasks.retrieve_primary_thumbnails.delay')
-    def test_image_upload_process_view(self):
+    def test_image_upload_process_view(self, retrieve_primary_thumbnail):
         self.client.login(username = 'test', password = 'password')
 
         # Test file with invalid extension
