@@ -1,13 +1,24 @@
 version: '3'
 
 services:
-  celery_default:
-    image: astrobin/astrobin:latest
-    environment:
-      - TESTING=true
-
-
   astrobin:
-    image: astrobin/astrobin:latest
+    build:
+      context: ../
+      dockerfile: docker/astrobin.dockerfile
+    command: bash -c "./manage.py collectstatic --noinput && gunicorn wsgi:application -w 4 -b :8083"
     environment:
       - TESTING=true
+
+
+  celery_default:
+    build:
+      context: ../
+      dockerfile: docker/astrobin.dockerfile
+    environment:
+      - TESTING=true
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=astrobin
+      - RABBITMQ_DEFAULT_PASS=astrobin

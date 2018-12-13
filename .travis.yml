@@ -4,23 +4,31 @@ dist: trusty
 services:
   - docker
 
+addons:
+  chrome: stable
 
 install:
-  - docker build --no-cache -t astrobin/astrobin:latest -f docker/astrobin.dockerfile .
+  - sudo apt update -y
+  - sudo apt install --only-upgrade docker-ce -y
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - (cd frontend && npm install)
+  - docker build -t astrobin/astrobin:latest -f docker/astrobin.dockerfile .
 
 before_script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker-compose -f docker/docker-compose.travis.yml up --no-deps -d
+  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/init.sh
 
 script:
-  - docker run -it astrobin/astrobin:latest ./scripts/test.sh
-  - docker run -it astrobin/astrobin:latest bash -c (cd frontend; npm i && ng test)
+  - (cd frontend; npm test)
+  - (cd frontend; npm run e2e)
+  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/test.sh
 
 after_success:
-  #- docker cp -a .git $(docker ps -q -f name=astrobin_astrobin --last 1):/code # Needed by codecov.
-  #- if [ ${DOCKER_MODE} = "compose" ]; then docker-compose -f docker/docker-compose.yml -f docker/docker-compose.build.yml -f docker/docker-compose.travis.yml exec astrobin ./scripts/codecov.sh; fi
-  #- if [ ${DOCKER_MODE} = "stack" ]; then docker exec -it $(docker ps -q -f name=astrobin_astrobin --last 1) ./scripts/codecov.sh; fi
+  - docker cp -a .git $(docker ps -q -f name=astrobin_astrobin --last 1):/code # Needed by codecov.
+  - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/codecov.sh
   - docker push astrobin/astrobin:latest
 
 after_script:
+  - docker-compose -f docker/docker-compose.travis.yml down
   - docker logout
 
