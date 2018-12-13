@@ -9,7 +9,10 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['--headless', '--disable-gpu', '--window-size=800,600', '--no-sandbox']
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
@@ -18,9 +21,6 @@ exports.config = {
     showColors: true,
     defaultTimeoutInterval: 30000,
     print: function() {}
-  },
-  chromeOptions: {
-    args: ["--headless"]
   },
   onPrepare: function() {
     require('ts-node').register({
