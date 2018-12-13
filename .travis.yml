@@ -19,7 +19,7 @@ jobs:
       script:
         - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/test.sh
       after_success:
-        - docker cp -a .git $(docker ps -q -f name=astrobin_astrobin --last 1):/code # Needed by codecov.
+        - docker cp -a .git $(docker ps -q -f name=docker_astrobin --last 1):/code # Needed by codecov.
         - docker-compose -f docker/docker-compose.travis.yml exec astrobin ./scripts/codecov.sh
         - docker push astrobin/astrobin:latest
       after_script:

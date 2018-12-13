@@ -6,12 +6,14 @@ services:
     command: bash -c "./manage.py collectstatic --noinput && gunicorn wsgi:application -w 4 -b :8083"
     environment:
       - TESTING=true
+      - CODECOV_TOKEN
 
 
   celery_default:
     image: astrobin/astrobin:latest
     environment:
       - TESTING=true
+
 
   rabbitmq:
     image: rabbitmq:management-alpine
