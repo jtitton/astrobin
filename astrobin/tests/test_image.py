@@ -605,7 +605,7 @@ class ImageTest(TestCase):
 
         response = self.client.get(reverse('image_rawthumb', kwargs = opts))
         # 404 because we don't serve that /media/static file, that's fine.
-        self.assertRedirects(response, get_expected_url(image), target_status_code=404)
+        self.assertRedirects(response, get_expected_url(image))
 
         # Set the watermark to some non ASCII symbol
         image.watermark_text = "©"
@@ -614,7 +614,7 @@ class ImageTest(TestCase):
 
         image = Image.objects.get(pk=image.pk)
         response = self.client.get(reverse('image_rawthumb', kwargs = opts))
-        self.assertRedirects(response, get_expected_url(image), target_status_code=404)
+        self.assertRedirects(response, get_expected_url(image))
 
         image.delete()
 
