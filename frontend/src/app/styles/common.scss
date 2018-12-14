@@ -1,0 +1,20 @@
+@import "variables";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background: url("assets/images/main-background.png") repeat;
+  font-size: 14px;
+  padding-bottom: 5rem;
+}
+
+a {
+  color: $ACCENT_COLOR;
+
+  &:hover {
+    color: lighten($ACCENT_COLOR, 5%);
+  }
+}
