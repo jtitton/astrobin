@@ -5,7 +5,7 @@ import logging
 TESTING = os.environ.get("TESTING", len(sys.argv) > 1 and sys.argv[1] == 'test')
 
 if TESTING:
-    DEBUG = True
+    DEBUG = False
     AWS_S3_ENABLED = False
     LOCAL_STATIC_STORAGE = True
     PREMIUM_ENABLED = True
@@ -26,6 +26,15 @@ if TESTING:
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
+
+    MIDDLEWARE_CLASSES = [
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'gadjo.requestprovider.middleware.RequestProvider',
+    ]
 
     EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
