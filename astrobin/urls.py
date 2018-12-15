@@ -462,11 +462,18 @@ urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
 
 if (settings.DEBUG or settings.TESTING) and not settings.AWS_S3_ENABLED:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}))
+    urlpatterns += patterns('', (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                                 {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}))
 
 if (settings.DEBUG or settings.TESTING) and settings.LOCAL_STATIC_STORAGE:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += patterns('', (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}))
+    urlpatterns += patterns('', (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+                                 {'document_root': settings.STATIC_ROOT, 'show_indexes': True}))
+
+if settings.LOCAL_STATIC_STORAGE:
+    urlpatterns += static("^assets", document_root="frontend/src/assets")
+    urlpatterns += patterns('', (r'^assets/(?P<path>.*)$', 'django.views.static.serve',
+                                 {'document_root': "frontend/src/assets", 'show_indexes': True}))
 
 if settings.DEBUG or settings.TESTING:
     import debug_toolbar
