@@ -39,6 +39,7 @@ class UserList(generics.ListAPIView):
     model = User
     serializer_class = UserSerializer
     permission_classes = (ReadOnly,)
+    queryset = User.objects.all()
 
 
 class UserDetail(generics.RetrieveAPIView):
@@ -58,6 +59,7 @@ class UserProfileList(generics.ListAPIView):
     model = UserProfile
     serializer_class = UserProfileSerializer
     permission_classes = (ReadOnly,)
+    queryset = UserProfile.objects.all()
 
 
 class UserProfileDetail(generics.RetrieveAPIView):
@@ -65,6 +67,31 @@ class UserProfileDetail(generics.RetrieveAPIView):
     This view presents a instance of one of the user profiles in the system.
     """
     model = UserProfile
-    serializer_class = UserProfileSerializer
     permission_classes = (ReadOnly,)
     queryset = UserProfile.objects.all()
+
+    def get_serializer_class(self):
+        profile = self.get_queryset().first()
+        if profile.user.pk == self.request.user.pk:
+            return UserProfileSerializerPrivate
+        return UserProfileSerializer
+
+
+class CurrentUserProfileDetail(generics.ListAPIView):
+    """
+    This view retrieves the user currently in the request.
+    """
+    model = UserProfile
+    permission_classes = (ReadOnly,)
+    queryset = UserProfile.objects.all()
+
+    def get_serializer_class(self):
+        profile = self.get_queryset().first()
+        if profile and profile.user == self.request.user:
+            return UserProfileSerializerPrivate
+        return UserProfileSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+            return self.queryset.filter(user=self.request.user)
+        return self.model.objects.none()

@@ -1,14 +1,13 @@
 # Django
-from django.conf.urls import patterns, url, include
-
+from django.conf.urls import patterns, url
 # Third party apps
 from rest_framework.urlpatterns import format_suffix_patterns
 
 # This app
 from .views import *
 
-
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^contenttypes/$', ContentTypeList.as_view(), name='contenttype-list'),
     url(r'^contenttypes/(?P<pk>\d+)/$', ContentTypeDetail.as_view(), name='contenttype-detail'),
 
@@ -17,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^userprofiles/$', UserProfileList.as_view(), name='userprofile-list'),
     url(r'^userprofiles/(?P<pk>\d+)/$', UserProfileDetail.as_view(), name='userprofile-detail'),
+    url(r'^userprofiles/current/$', CurrentUserProfileDetail.as_view(), name='userprofile-detail-current'),
 )
 
 # Format suffixes

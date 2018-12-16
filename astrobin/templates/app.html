@@ -19,12 +19,16 @@
 </head>
 
 <body>
+
 <app-root></app-root>
+<div class="app-loading"></div>
+
 {% render_bundle 'main' 'js' 'FRONTEND' %}
 {% render_bundle 'polyfills' 'js' 'FRONTEND' %}
 {% render_bundle 'runtime' 'js' 'FRONTEND' %}
 {% render_bundle 'styles' 'js' 'FRONTEND' %}
 {% render_bundle 'vendor' 'js' 'FRONTEND' %}
+
 </body>
 </html>
 

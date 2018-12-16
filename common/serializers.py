@@ -34,11 +34,18 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'userprofile', 'avatar')
+        exclude = ('email', 'last_name')
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('real_name',)
+        exclude = (
+            'premium_counter',
+            'exclude_from_competitions',
+        )
 
+
+class UserProfileSerializerPrivate(UserProfileSerializer):
+    class Meta(UserProfileSerializer.Meta):
+        exclude = ()

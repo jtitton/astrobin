@@ -1,5 +1,8 @@
-$ACCENT_COLOR: #CC4B2E;
+$accent-color: #CC4B2E;
+$white: #FCFCFC;
+$darkest_background_text_color: #B0B0B0;
 
-$WHITE: #FCFCFC;
-
-$DARKEST_BACKGROUND_TEXT_COLOR: #B0B0B0;
+// Bootstrap overrides:
+$theme-colors: (
+  "primary": $accent-color
+)

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppContextService, IAppContext } from "../../services/app-context.service";
 
 @Component({
   selector: 'app-header',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  appContext: IAppContext;
 
-  constructor() {
+  constructor(appContext: AppContextService) {
+    this.appContext = appContext.get();
   }
 
   ngOnInit() {
   }
-
 }
