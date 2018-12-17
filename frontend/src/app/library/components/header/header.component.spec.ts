@@ -1,6 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpLoaderFactory } from "../../../app.module";
+import { PipesModule } from "../../pipes/pipes.module";
+import { SharedModule } from "../../shared.module";
 
 import { HeaderComponent } from './header.component';
 
@@ -12,7 +16,15 @@ describe('HeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        FontAwesomeModule
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        }),
+        SharedModule,
+        PipesModule
       ],
       declarations: [HeaderComponent]
     })

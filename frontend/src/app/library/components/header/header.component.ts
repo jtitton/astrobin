@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppContextService, IAppContext } from "../../services/app-context.service";
+import { LegacyRoutesService } from "../../services/legacy-routes.service";
+import { UsersService } from "../../services/users.service";
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,8 @@ import { AppContextService, IAppContext } from "../../services/app-context.servi
 export class HeaderComponent implements OnInit {
   appContext: IAppContext;
 
-  constructor(appContext: AppContextService) {
+  constructor(appContext: AppContextService, public legacyRoutes: LegacyRoutesService,
+              public usersService: UsersService) {
     this.appContext = appContext.get();
   }
 

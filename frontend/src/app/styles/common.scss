@@ -51,4 +51,16 @@ a {
 
 .dropdown-menu {
   font-size: .85rem;
+
+  .dropdown-item {
+    &:hover {
+      background-color: $accent-color;
+      color: $white;
+    }
+
+    fa-icon {
+      font-size: 11px;
+      margin-right: .25rem;
+    }
+  }
 }

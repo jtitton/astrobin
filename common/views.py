@@ -1,17 +1,10 @@
 # Django
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.views.generic import *
 
 # Third party apps
 from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework import permissions
-from rest_framework.reverse import reverse
-from rest_framework.response import Response
-
 # AstroBin
-from astrobin.models import UserProfile
+from rest_framework.filters import DjangoFilterBackend
+from subscription.models import UserSubscription, Subscription
 
 # This app
 from .permissions import ReadOnly
@@ -95,3 +88,35 @@ class CurrentUserProfileDetail(generics.ListAPIView):
         if self.request.user.is_authenticated():
             return self.queryset.filter(user=self.request.user)
         return self.model.objects.none()
+
+
+class SubscriptionList(generics.ListAPIView):
+    model = Subscription
+    serializer_class = SubscriptionSerializer
+    permission_classes = (ReadOnly,)
+    queryset = Subscription.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('category',)
+
+
+class SubscriptionDetail(generics.RetrieveAPIView):
+    model = Subscription
+    serializer_class = SubscriptionSerializer
+    permission_classes = (ReadOnly,)
+    queryset = Subscription.objects.all()
+
+
+class UserSubscriptionList(generics.ListAPIView):
+    model = UserSubscription
+    serializer_class = UserSubscriptionSerializer
+    permission_classes = (ReadOnly,)
+    queryset = UserSubscription.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('user',)
+
+
+class UserSubscriptionDetail(generics.RetrieveAPIView):
+    model = UserSubscription
+    serializer_class = UserSubscriptionSerializer
+    permission_classes = (ReadOnly,)
+    queryset = UserSubscription.objects.all()
