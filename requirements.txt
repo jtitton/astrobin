@@ -137,7 +137,7 @@ parso==0.1.1
 Paste==2.0.3
 pbr==3.0.1
 pem==17.1.0
-Pillow==4.1.1
+Pillow==6.2.0
 ply==3.10
 psycopg2==2.7.1
 -e git+https://github.com/siovene/pybbm.git@a6d1a3e1df7208308191927c23c6a3ad71018547#egg=pybbm
